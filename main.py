@@ -7,7 +7,7 @@ from nltk.lm import MLE, Laplace
 from collections import Counter
 from nltk.lm.preprocessing import pad_both_ends, padded_everygram_pipeline
 
-from avatar import dog, cat
+from lib.avatar import dog, cat
 
 # Download nltk resources
 nltk.download("punkt_tab")
@@ -28,7 +28,7 @@ lm.fit(corpus, vocab)
 while True:
     query = input("USER> ")
     if query.lower() == "exit" or query == ":q":
-        print("Good bye...")
+        print("Goodbye...")
         break
 
     gen = lm.generate(50)
