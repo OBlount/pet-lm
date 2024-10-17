@@ -13,6 +13,7 @@ from joblib import dump, load
 # Download nltk resources
 nltk.download("punkt_tab")
 
+# Load up a pre-existing lm or produce one using the data/dataset.csv
 def lm_init():
     if os.path.isfile("lm.joblist"):
         return lm_load("lm.joblist")
@@ -36,12 +37,15 @@ def lm_init():
     lm_save(lm)
     return lm
 
+# Dump lm to disk
 def lm_save(lm):
     dump(lm, "data/lm.joblib")
 
+# Load lm from disk
 def lm_load():
     return load("data/lm.joblib")
 
+# Generate and format natural language
 def lm_generate_response(lm):
     gen = lm.generate(50)
     return (" ".join(gen). replace("<s>", "").replace("</s>", "").strip())
