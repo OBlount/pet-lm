@@ -26,7 +26,7 @@ for url in urls:
     artifacts.append(scrape(url))
     time.sleep(2)
 
-file_path = "dataset.csv"
+file_path = "data/dataset.csv"
 with open(file_path, mode="w", encoding="utf-8") as file:
     writer = csv.writer(file)
     writer.writerow(["URL", "Content"])
