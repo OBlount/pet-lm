@@ -7,6 +7,8 @@ from nltk.lm import MLE, Laplace
 from collections import Counter
 from nltk.lm.preprocessing import pad_both_ends, padded_everygram_pipeline
 
+from avatar import dog, cat
+
 # Download nltk resources
 nltk.download("punkt_tab")
 
@@ -23,7 +25,11 @@ corpus, vocab = padded_everygram_pipeline(n_param, tokenized)
 lm = Laplace(n_param)
 lm.fit(corpus, vocab)
 
-print ("Size of vocabulary: ", str(len(lm.vocab)))
+while True:
+    query = input("USER> ")
+    if query.lower() == "exit" or query == ":q":
+        print("Good bye...")
+        break
 
-gen = lm.generate(50)
-print(" ".join(gen). replace("<s>", "").replace("</s>", ""))
+    gen = lm.generate(50)
+    dog(" ".join(gen). replace("<s>", "").replace("</s>", "").strip())
