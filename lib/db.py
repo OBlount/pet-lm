@@ -1,3 +1,4 @@
+import re
 import sqlite3
 
 class DBManager():
@@ -5,6 +6,7 @@ class DBManager():
         self.conn = sqlite3.connect("data/chatbot.db")
         self.cursor = self.conn.cursor()
         self.create_tables()
+        self.username_constraint = r"[^a-zA-z\s]'"
 
     def __del__(self):
         self.conn.close()
@@ -39,3 +41,31 @@ class DBManager():
         )
         ''')
         self.conn.commit()
+
+    def insert_username(self, name):
+        sql = """
+        INSERT INTO usernames (user_name)
+        VALUES (?);
+        """
+        cleaned_username = re.sub(self.username_constraint, "", name)
+        self.cursor.execute(sql, (cleaned_username,))
+        self.conn.commit()
+        return self.cursor.lastrowid
+
+    def update_favourite_animal(self, animal, user_id):
+        sql = """
+        UPDATE usernames
+        SET favourite_animal = ?
+        WHERE user_name = ?;
+        """
+        self.cursor.execute(sql, (animal.lower(), user_id,))
+        self.conn.commit()
+        return self.cursor.lastrowid
+
+    def get_username(self, user_id) -> str:
+        sql = """
+        SELECT user_name FROM usernames WHERE user_id = ?;
+        """
+        self.cursor.execute(sql, (user_id,))
+        res = self.cursor.fetchone()
+        return res[0] if res else "USER"

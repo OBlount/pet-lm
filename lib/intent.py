@@ -18,7 +18,7 @@ def user_intent(user_input: str):
     intent_index = cosine_similarities.argmax()
     similarity_score = cosine_similarities[intent_index]
 
-    if similarity_score > 0.4:
+    if similarity_score > 0.5:
         return responses[intent_index]
     else:
         return None

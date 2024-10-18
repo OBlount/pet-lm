@@ -19,3 +19,6 @@ def cat(message: str) -> str:
   \(__)|   
     """
     print(response)
+
+def default_avatar(message: str) -> str:
+    print(f"~~> {message[0:MAX_MSG_SIZE]}")
