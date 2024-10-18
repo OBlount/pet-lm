@@ -1,8 +1,11 @@
+from lib.db import DBManager
 from lib.lm import lm_init, lm_generate_response
 from lib.intent import user_intent
 from lib.discoverability import get_random_employee_info
 from lib.avatar import dog, cat
 
+
+dbm = DBManager()
 
 # Main conversational loop
 lm = lm_init()
@@ -19,3 +22,6 @@ while True:
             print(get_random_employee_info())
     else:
         dog(lm_generate_response(lm))
+
+# Clean
+del dbm
