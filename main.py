@@ -1,4 +1,6 @@
 from lib.lm import lm_init, lm_generate_response
+from lib.intent import user_intent
+from lib.discoverability import get_random_employee_info
 from lib.avatar import dog, cat
 
 
@@ -10,4 +12,10 @@ while True:
         print("Goodbye...")
         break
 
-    dog(lm_generate_response(lm))
+    intent = user_intent(query)
+    if intent:
+        dog(intent)
+        if "get in touch" in intent:
+            print(get_random_employee_info())
+    else:
+        dog(lm_generate_response(lm))

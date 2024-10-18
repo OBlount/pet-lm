@@ -3,8 +3,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
+# Compute user query intent using tf-idf and cosine similarity
 def user_intent(user_input: str):
-    df = pd.read_csv("../data/intentMap.csv")
+    df = pd.read_csv("data/intentMap.csv")
 
     intents = df["Intent"].astype(str).tolist()
     responses = df["Response"].astype(str).tolist()
@@ -17,7 +18,7 @@ def user_intent(user_input: str):
     intent_index = cosine_similarities.argmax()
     similarity_score = cosine_similarities[intent_index]
 
-    if similarity_score > 0:
+    if similarity_score > 0.4:
         return responses[intent_index]
     else:
         return None

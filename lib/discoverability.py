@@ -1,3 +1,5 @@
+import random
+
 # Document an employee
 def groomer_document_structuring(groomer):
     return {
@@ -33,15 +35,15 @@ def groomer_realisation(groomer):
     return f"{intro} {skills} {personal} {breeds}"
 
 # Print the entire employee list
-def groomer_test():
-    for helper in helpers:
-        structured = groomer_document_structuring(helper)
-        aggregated = groomer_aggregation (structured)
-        final_output = groomer_realisation(aggregated)
-        print(final_output,"\n")
+def get_random_employee_info():
+    employee = employees[random.randrange(len(employees))]
+    structured = groomer_document_structuring(employee)
+    aggregated = groomer_aggregation (structured)
+    final_output = groomer_realisation(aggregated)
+    return final_output
 
 # Employees that the user can get to know more of
-helpers = [
+employees = [
         {
             "name": "Aisha",
             "role ": "Pet Groomer",
