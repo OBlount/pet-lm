@@ -5,7 +5,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # Compute user query intent using tf-idf and cosine similarity
 def user_intent(user_input: str):
-    df = pd.read_csv("data/intentMap.csv")
+    df = pd.read_csv("data/intentMap.csv", sep='|')
 
     intents = df["Intent"].astype(str).tolist()
     responses = df["Response"].astype(str).tolist()

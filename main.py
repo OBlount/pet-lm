@@ -1,7 +1,7 @@
 from lib.db import DBManager
 from lib.lm import lm_init, lm_generate_response
 from lib.intent import user_intent
-from lib.discoverability import get_random_employee_info
+from lib.discoverability import get_random_employee_info, get_help_menu
 from lib.avatar import default_avatar, dog, cat
 
 
@@ -35,11 +35,18 @@ while True:
 
     intent = user_intent(query)
     if intent:
-        avatar_print(intent)
-        if "get in touch" in intent:
+        if "your name" in intent:
+            avatar_print(intent + f" Your name is {dbm.get_username(user_id)}.")
+        elif "help menu" in intent:
+            avatar_print(intent)
+            print(get_help_menu())
+        elif "meet our team" in intent:
+            avatar_print(intent)
             print(get_random_employee_info())
+        else:
+            avatar_print(intent)
     else:
-        avatar_print(lm_generate_response(lm))
+        avatar_print("Sorry, I don't quite know how to answer that")
 
 # Clean
 del dbm

@@ -42,6 +42,36 @@ def get_random_employee_info():
     final_output = groomer_realisation(aggregated)
     return final_output
 
+# Document the help instructions
+def help_document_structuring(help_command):
+    return {
+            "lead": [help_command["lead"]],
+            "briefing": [help_command["command"], help_command["description"]],
+    }
+
+# Aggregate all the info we need for the help menu
+def help_aggregation(structured_help):
+    aggregation = {}
+    aggregation["lead"] = f"{structured_help['lead'][0]}! "
+    aggregation["briefing"] = f"{structured_help['briefing'][0]} \n\t - {structured_help['briefing'][1]}"
+    return aggregation
+
+# Seemless connection between aggregated sentences
+def help_realisation(help_menu):
+    lead = help_menu["lead"]
+    briefing = "The command to do this is: " + help_menu["briefing"] + "\n\n"
+    return f"{lead} {briefing}"
+
+# Print the entire employee list
+def get_help_menu():
+    final_output = ""
+    for cmd in help_menu:
+        structured = help_document_structuring(cmd)
+        aggregated = help_aggregation(structured)
+        final_output = final_output + help_realisation(aggregated)
+    end = "Please take note of what I can do for you. If you are in any doubt, please type 'help' to get these tips up again."
+    return final_output + end
+
 # Employees that the user can get to know more of
 employees = [
         {
@@ -89,7 +119,7 @@ employees = [
 # Help hints and chatbot function discoverability
 help_menu = [
         {
-            "command": "greet",
+            "command": "hello",
             "description": "Say hello to the bot.",
             "lead": "I can greet"
         },

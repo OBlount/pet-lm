@@ -1,5 +1,5 @@
 # Ascii art source: https://www.asciiart.eu/
-MAX_MSG_SIZE = 100
+MAX_MSG_SIZE = 200
 def dog(message: str) -> str:
     speech_bubble = f"< {message[0:MAX_MSG_SIZE]} >"
     response = f"""
