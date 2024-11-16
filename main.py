@@ -1,5 +1,5 @@
 from lib.db import DBManager
-from lib.lm import lm_init, lm_generate_response
+from lib.pipeline import Pipeline, keep_basic_punctuation, tokenise, pos_tag_speech, filter_stop_words, lemmatise
 from lib.intent import user_intent
 from lib.discoverability import get_random_employee_info, get_help_menu
 from lib.avatar import default_avatar, dog, cat
@@ -25,8 +25,15 @@ while True:
             avatar_print = default_avatar
         break
 
+pipeline = Pipeline(
+        keep_basic_punctuation,
+        tokenise,
+        pos_tag_speech,
+        filter_stop_words,
+        lemmatise,
+)
+
 # Main conversational loop
-lm = lm_init()
 while True:
     query = input(f"{dbm.get_username(user_id)}> ")
     if query.lower() == "exit" or query == ":q":
