@@ -2,5 +2,6 @@ venv/
 __pycache__/
 
 data/dataset.csv
+data/training.1600000.processed.noemoticon.csv
 data/*.db
 data/*.joblib

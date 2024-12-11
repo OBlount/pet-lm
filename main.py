@@ -2,6 +2,7 @@ from lib.db import DBManager
 from lib.pipeline import Pipeline, tokenise, keep_basic_punctuation, pos_tag_speech, filter_stop_words, lemmatise_pos_tokens
 from lib.intent import user_intent
 from lib.discoverability import get_random_employee_info, get_help_menu
+from lib.sentiment import SentimentAnalyser
 from lib.avatar import default_avatar, dog, cat
 
 
@@ -25,6 +26,7 @@ while True:
             avatar_print = default_avatar
         break
 
+# Create custom NLP pipeline
 pipeline = Pipeline(
         tokenise,
         keep_basic_punctuation,
@@ -32,6 +34,8 @@ pipeline = Pipeline(
 #       filter_stop_words,
         lemmatise_pos_tokens,
 )
+
+sentimentAnalyser = SentimentAnalyser()
 
 # Main conversational loop
 while True:
@@ -41,7 +45,9 @@ while True:
         break
 
     query = pipeline.execute_functions(query)
+    sentimentAnalyser.process_user_query(sentimentAnalyser.load_sentiment_model(), query)
     chatbot_response = user_intent(query)
+
     if chatbot_response:
         if "your name" in chatbot_response:
             avatar_print(chatbot_response + f" Your name is {dbm.get_username(user_id)}.")
