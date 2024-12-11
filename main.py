@@ -1,9 +1,12 @@
+import random
+
 from lib.db import DBManager
 from lib.pipeline import Pipeline, tokenise, keep_basic_punctuation, pos_tag_speech, filter_stop_words, lemmatise_pos_tokens
 from lib.functionality import *
 from lib.intent import user_intent
 from lib.discoverability import get_random_employee_info, get_help_menu
 from lib.sentiment import SentimentAnalyser
+from lib.markers import conversational_markers
 from lib.avatar import default_avatar
 
 
@@ -40,8 +43,10 @@ while True:
     # Intents/Functions
     if chatbot_response:
         if "Goodbye" in chatbot_response:
-            avatar_print(f"Goodbye {dbm.get_username(user_id)}...")
+            avatar_print(f"{random.choice(conversational_markers['goodbyes'])} {dbm.get_username(user_id)}...")
             quit()
+        elif "Hello!" in chatbot_response:
+            avatar_print(f"{random.choice(conversational_markers['greetings'])}, {dbm.get_username(user_id)}...")
         elif "your name" in chatbot_response:
             avatar_print(chatbot_response + f" Your name is {dbm.get_username(user_id)}.")
         elif "help menu" in chatbot_response:
