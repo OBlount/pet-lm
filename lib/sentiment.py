@@ -39,7 +39,7 @@ def train_and_save():
     data["target"] = data["target"].map(label_mapping)
     x = data["text"]
     y = data["target"]
-    x_subset, _, y_subset, _ = train_test_split(x, y, test_size=0.70, random_state=123)
+    x_subset, _, y_subset, _ = train_test_split(x, y, test_size=0.30, random_state=123)
     pipeline = make_pipeline(TfidfVectorizer(stop_words="english", max_features=10000), MultinomialNB())
     pipeline.fit(x_subset, y_subset)
     print("Saving model...")
