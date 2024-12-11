@@ -40,16 +40,17 @@ sentimentAnalyser = SentimentAnalyser()
 # Main conversational loop
 while True:
     query = input(f"{dbm.get_username(user_id)}> ")
-    if query.lower() == "exit" or query == ":q":
-        avatar_print(f"Goodbye {dbm.get_username(user_id)}...")
-        break
 
     query = pipeline.execute_functions(query)
     sentimentAnalyser.process_user_query(sentimentAnalyser.load_sentiment_model(), query)
     chatbot_response = user_intent(query)
 
+    # Intents/Functions
     if chatbot_response:
-        if "your name" in chatbot_response:
+        if "Goodbye" in chatbot_response:
+            avatar_print(f"Goodbye {dbm.get_username(user_id)}...")
+            quit()
+        elif "your name" in chatbot_response:
             avatar_print(chatbot_response + f" Your name is {dbm.get_username(user_id)}.")
         elif "help menu" in chatbot_response:
             avatar_print(chatbot_response)
