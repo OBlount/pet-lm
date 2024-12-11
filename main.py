@@ -62,5 +62,11 @@ while True:
     else:
         avatar_print("Sorry, I don't quite know how to answer that")
 
+    # Append a message onto the response to help the user having trouble
+    if sentimentAnalyser.get_sentiment() == -3:
+        print("\nI've noticed that you might not be enjoying your booking experience. here's some help. If you need any assistance then ask anytime for help")
+        print(get_help_menu())
+        print("\nOr get in contact with our customer support online. Thank-you for being patient with us.")
+
 # Clean
 del dbm
