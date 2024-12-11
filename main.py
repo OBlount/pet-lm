@@ -1,5 +1,5 @@
 from lib.db import DBManager
-from lib.pipeline import Pipeline, keep_basic_punctuation, tokenise, pos_tag_speech, filter_stop_words, lemmatise
+from lib.pipeline import Pipeline, tokenise, keep_basic_punctuation, pos_tag_speech, filter_stop_words, lemmatise_pos_tokens
 from lib.intent import user_intent
 from lib.discoverability import get_random_employee_info, get_help_menu
 from lib.avatar import default_avatar, dog, cat
@@ -26,11 +26,11 @@ while True:
         break
 
 pipeline = Pipeline(
-        keep_basic_punctuation,
         tokenise,
+        keep_basic_punctuation,
         pos_tag_speech,
-        filter_stop_words,
-        lemmatise,
+#       filter_stop_words,
+        lemmatise_pos_tokens,
 )
 
 # Main conversational loop
@@ -40,18 +40,19 @@ while True:
         avatar_print(f"Goodbye {dbm.get_username(user_id)}...")
         break
 
-    intent = user_intent(query)
-    if intent:
-        if "your name" in intent:
-            avatar_print(intent + f" Your name is {dbm.get_username(user_id)}.")
-        elif "help menu" in intent:
-            avatar_print(intent)
+    query = pipeline.execute_functions(query)
+    chatbot_response = user_intent(query)
+    if chatbot_response:
+        if "your name" in chatbot_response:
+            avatar_print(chatbot_response + f" Your name is {dbm.get_username(user_id)}.")
+        elif "help menu" in chatbot_response:
+            avatar_print(chatbot_response)
             print(get_help_menu())
-        elif "meet our team" in intent:
-            avatar_print(intent)
+        elif "meet our team" in chatbot_response:
+            avatar_print(chatbot_response)
             print(get_random_employee_info())
         else:
-            avatar_print(intent)
+            avatar_print(chatbot_response)
     else:
         avatar_print("Sorry, I don't quite know how to answer that")
 

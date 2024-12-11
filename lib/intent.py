@@ -4,7 +4,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 # Compute user query intent using tf-idf and cosine similarity
-def user_intent(user_input: str):
+def user_intent(user_input):
+    if not user_input:
+        return None
+
     df = pd.read_csv("data/intentMap.csv", sep='|')
 
     intents = df["Intent"].astype(str).tolist()
@@ -12,7 +15,7 @@ def user_intent(user_input: str):
 
     vectoriser = TfidfVectorizer()
     tfidf_matrix = vectoriser.fit_transform(intents)
-    user_tfidf = vectoriser.transform([user_input])
+    user_tfidf = vectoriser.transform([" ".join([token for token, tag in user_input])])
 
     cosine_similarities = cosine_similarity(user_tfidf, tfidf_matrix).flatten()
     intent_index = cosine_similarities.argmax()
