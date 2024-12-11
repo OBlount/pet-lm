@@ -17,6 +17,7 @@ class DBManager():
         CREATE TABLE IF NOT EXISTS usernames (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_name TEXT NOT NULL,
+            pet_name TEXT NULL,
             favourite_animal TEXT NULL
         )
         ''')
@@ -52,11 +53,31 @@ class DBManager():
         self.conn.commit()
         return self.cursor.lastrowid
 
+    def update_username(self, name, user_id):
+        sql = """
+        UPDATE usernames
+        SET user_name = ?
+        WHERE user_id = ?;
+        """
+        self.cursor.execute(sql, (name.lower(), user_id,))
+        self.conn.commit()
+        return self.cursor.lastrowid
+
+    def update_pet_name(self, name, user_id):
+        sql = """
+        UPDATE usernames
+        SET pet_name = ?
+        WHERE user_id = ?;
+        """
+        self.cursor.execute(sql, (name.lower(), user_id,))
+        self.conn.commit()
+        return self.cursor.lastrowid
+
     def update_favourite_animal(self, animal, user_id):
         sql = """
         UPDATE usernames
         SET favourite_animal = ?
-        WHERE user_name = ?;
+        WHERE user_id = ?;
         """
         self.cursor.execute(sql, (animal.lower(), user_id,))
         self.conn.commit()
@@ -69,3 +90,11 @@ class DBManager():
         self.cursor.execute(sql, (user_id,))
         res = self.cursor.fetchone()
         return res[0] if res else "USER"
+
+    def get_pet_name(self, user_id) -> str:
+        sql = """
+        SELECT pet_name FROM usernames WHERE user_id = ?;
+        """
+        self.cursor.execute(sql, (user_id,))
+        res = self.cursor.fetchone()
+        return res[0] if res else "PET"

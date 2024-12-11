@@ -24,7 +24,7 @@ class SentimentAnalyser():
         if sentiment == "positive":
             self.emotional_metric = min(self.emotional_metric+1, 6)
         elif sentiment == "negative":
-            self.emotional_metric = max(self.emotional_metric-2, -3)
+            self.emotional_metric = max(self.emotional_metric-2, -8)
         else:
             pass
 
