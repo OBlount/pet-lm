@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import time
 
 from sklearn.model_selection import cross_val_score, StratifiedKFold, train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -30,15 +31,24 @@ kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=seed)
 
 print("Comparing classifiers")
 results = {}
+training_times = {}
 for name, classifier in classifiers.items():
     pipeline = make_pipeline(TfidfVectorizer(stop_words="english", max_features=10000), classifier)
+
+    start = time.time()
     scores = cross_val_score(pipeline, x_subset, y_subset, cv=kfold, scoring="accuracy")
+    end = time.time()
+
+    training_time = end - start
+    results[name] = scores
+    training_times[name] = training_time
+
     results[name] = scores
     print(f"{name}:")
     print("Cross-validation scores:", scores)
     print("Average accuracy:", np.mean(scores), '\n')
+    print(f"Training time: {training_time:.2f} seconds\n")
 
 print("Summary of classifier performance:")
 for name, scores in results.items():
-    print(f"{name}: Average Accuracy = {np.mean(scores):.4f}")
-
+        print(f"{name}: Average Accuracy = {np.mean(scores):.4f}, Training Time = {training_times[name]:.2f} seconds")
