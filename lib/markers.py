@@ -82,8 +82,6 @@ conversational_markers = {
         "are we good",
         "do you agree",
         "are you sure",
-        "is that all",
-        "anything else",
     ],
 }
 

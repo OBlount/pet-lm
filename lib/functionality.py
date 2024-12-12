@@ -1,7 +1,12 @@
 # functionality.py
 # Contains helper functions to get anything done with the chat-bot
 
+def explicit_confirmation(intent_msg: str) -> bool:
+    confirmation = input(intent_msg).lower()
+    return (True if confirmation == "yes" else False)
+
 __all__ = [
+    "explicit_confirmation",
     "set_username",
     "update_username",
     "set_pet_name",

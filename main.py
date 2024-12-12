@@ -56,15 +56,18 @@ while True:
             avatar_print(chatbot_response)
             print(get_random_employee_info())
         elif "change my name" in chatbot_response:
-            update_username(dbm, user_id)
+            if explicit_confirmation(f"You have chosen to change your username, {random.choice(conversational_markers['confirmation_follow_up'])}?:\n"):
+                update_username(dbm, user_id)
         elif "change my pet's name" in chatbot_response:
-            set_pet_name(dbm, user_id)
+            if explicit_confirmation(f"You have chosen to change your pet's name, {random.choice(conversational_markers['confirmation_follow_up'])}?:\n"):
+                set_pet_name(dbm, user_id)
         elif "change my favourite pet preference" in chatbot_response:
-            avatar_print = set_favourite_pet(dbm, user_id)
+            if explicit_confirmation(f"You have chosen to change your avatar, {random.choice(conversational_markers['confirmation_follow_up'])}?:\n"):
+                avatar_print = set_favourite_pet(dbm, user_id)
         else:
             avatar_print(chatbot_response)
     else:
-        avatar_print("Sorry, I don't quite know how to answer that")
+        avatar_print(f"Sorry, I don't quite know how to answer that, {random.choice(conversational_markers['clarifications_questions'])}?")
 
     # Append a message onto the response to help the user having trouble
     if sentimentAnalyser.get_sentiment() == -8:
