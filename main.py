@@ -24,10 +24,10 @@ avatar_print = set_favourite_pet(dbm, user_id)
 # Create custom NLP pipeline
 pipeline = Pipeline(
         tokenise,
-        keep_basic_punctuation,
+#        keep_basic_punctuation,
         pos_tag_speech,
 #       filter_stop_words,
-        lemmatise_pos_tokens,
+#        lemmatise_pos_tokens,
 )
 
 sentimentAnalyser = SentimentAnalyser()
