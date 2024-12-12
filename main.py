@@ -56,14 +56,20 @@ while True:
             avatar_print(chatbot_response)
             print(get_random_employee_info())
         elif "change my name" in chatbot_response:
-            if explicit_confirmation(f"You have chosen to change your username, {random.choice(conversational_markers['confirmation_follow_up'])}?:\n"):
+            if explicit_confirmation(f"You have chosen to change your username, {random.choice(conversational_markers['confirmation_follow_up'])}? (yes/no): "):
                 update_username(dbm, user_id)
         elif "change my pet's name" in chatbot_response:
-            if explicit_confirmation(f"You have chosen to change your pet's name, {random.choice(conversational_markers['confirmation_follow_up'])}?:\n"):
+            if explicit_confirmation(f"You have chosen to change your pet's name, {random.choice(conversational_markers['confirmation_follow_up'])}? (yes/no):"):
                 set_pet_name(dbm, user_id)
         elif "change my favourite pet preference" in chatbot_response:
-            if explicit_confirmation(f"You have chosen to change your avatar, {random.choice(conversational_markers['confirmation_follow_up'])}?:\n"):
+            if explicit_confirmation(f"You have chosen to change your avatar, {random.choice(conversational_markers['confirmation_follow_up'])}? (yes/no): "):
                 avatar_print = set_favourite_pet(dbm, user_id)
+        elif "book an appointment" in chatbot_response:
+            if explicit_confirmation(f"You have chosen to book an appointment, {random.choice(conversational_markers['confirmation_follow_up'])}? (yes/no): "):
+                initiate_booking(dbm, user_id)
+        elif "get your bookings" in chatbot_response:
+            if explicit_confirmation(f"You have chosen to look at bookings, {random.choice(conversational_markers['confirmation_follow_up'])}? (yes/no): "):
+                show_bookings(dbm, user_id)
         else:
             avatar_print(chatbot_response)
     else:
