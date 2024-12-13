@@ -77,6 +77,7 @@ def initiate_booking(dbm, user_id):
             continue
 
         # Retrieve available slots for the chosen date
+        print(f"You have chosen the date: {date}")
         slots = dbm.get_booking_slots(date)
         if not slots:
             print(f"Sorry, no slots are available for {date}. Please choose another date. Or quit by typing 'quit'")
